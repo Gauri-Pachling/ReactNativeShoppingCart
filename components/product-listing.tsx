@@ -8,8 +8,12 @@ import {
   FlatList,
 } from "react-native";
 
+import { useRouter } from "expo-router";
+
 export default function ProductListing() {
   const [products, setProducts] = useState<null | any[]>(null);
+
+  const router = useRouter();
 
   useEffect(() => {
     async function fetchProducts() {
@@ -25,22 +29,24 @@ export default function ProductListing() {
   return (
     <FlatList
       data={products}
-      
       ItemSeparatorComponent={() => {
         return <View style={{ borderWidth: 1, borderColor: "red" }}></View>;
       }}
-      renderItem={(product: any) => {
+      renderItem={({ item }: any) => {
+
         return (
           <View style={Styles.productItem}>
             <View style={Styles.productImage}>
               <Text>Image</Text>
             </View>
             <View style={Styles.productContent}>
-              <Text>{product.title}</Text>
+              <Text>{item.title}</Text>
               <Text>$999</Text>
             </View>
             <View style={{ alignSelf: "flex-end" }}>
-              <Button title="Buy now" />
+              <Button title="Buy now" onPress={()=>{
+                //router.navigate(`/products/${item.userId}`)
+              }} />
             </View>
           </View>
         );
