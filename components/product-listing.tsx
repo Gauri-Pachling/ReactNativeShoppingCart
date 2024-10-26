@@ -4,11 +4,13 @@ import {
   View,
   StyleSheet,
   Button,
-  ScrollViewComponent,
   FlatList,
+  Image,
+  TouchableHighlight,
 } from "react-native";
 
 import { useRouter } from "expo-router";
+import { TouchableOpacity } from "react-native";
 
 export default function ProductListing() {
   const [products, setProducts] = useState<null | any[]>(null);
@@ -33,22 +35,37 @@ export default function ProductListing() {
         return <View style={{ borderWidth: 1, borderColor: "red" }}></View>;
       }}
       renderItem={({ item }: any) => {
-
         return (
-          <View style={Styles.productItem}>
-            <View style={Styles.productImage}>
-              <Text>Image</Text>
+          <TouchableOpacity
+            activeOpacity={0.1}
+            onPress={() => {
+              //router.navigate(`/products/${item.userId}`);
+            }}
+          >
+            <View style={Styles.productItem}>
+              <View style={Styles.productImage}>
+                <Text>
+                  <Image
+                    width={100}
+                    height={100}
+                    source={{ uri: "https://placehold.co/100x100" }}
+                  />
+                </Text>
+              </View>
+              <View style={Styles.productContent}>
+                <Text>{item.title}</Text>
+                <Text>$999</Text>
+              </View>
+              {/* <View style={{ alignSelf: "flex-end" }}>
+              <Button
+                title="Buy now"
+                onPress={() => {
+                  router.navigate(`/products/${item.userId}`);
+                }}
+              />
+            </View> */}
             </View>
-            <View style={Styles.productContent}>
-              <Text>{item.title}</Text>
-              <Text>$999</Text>
-            </View>
-            <View style={{ alignSelf: "flex-end" }}>
-              <Button title="Buy now" onPress={()=>{
-                //router.navigate(`/products/${item.userId}`)
-              }} />
-            </View>
-          </View>
+          </TouchableOpacity>
         );
       }}
     />
